@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width= device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>توليد كلمة سر الطالب</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
@@ -71,6 +71,7 @@
             display: none;
             border-radius: 5px;
             word-break: break-all;
+            cursor: pointer;
         }
         .success {
             background-color: #dff0d8;
@@ -110,7 +111,6 @@
             text-decoration: underline;
         }
 
-        /* تحسينات للشاشات الصغيرة */
         @media (max-width: 480px) {
             h1 {
                 font-size: 1.5rem;
@@ -155,7 +155,7 @@
         <h1>نظام توليد كلمة سر الطالب</h1>
         <input type="text" id="nationalId" placeholder="أدخل الرقم القومي (14 رقم)" maxlength="14" inputmode="numeric">
         <button onclick="generateCode()">توليد الكود</button>
-        <div id="result"></div>
+        <div id="result" onclick="copyToClipboard()"></div>
         <div class="info">
             سيتم توليد كلمة السر بناءً على:<br>
             1. آخر 5 أرقام من الرقم القومي<br>
@@ -191,7 +191,7 @@
             const finalCode = `${lastFiveDigits}@sis`;
 
             resultDiv.className = 'success';
-            resultDiv.innerHTML = `كود الطالب: <span style="color: #31708f; font-family: monospace">${finalCode}</span>`;
+            resultDiv.innerHTML = `كود الطالب: <span id="generatedCode" style="color: #31708f; font-family: monospace">${finalCode}</span>`;
             resultDiv.style.display = 'block';
         }
 
@@ -202,12 +202,19 @@
             resultDiv.style.display = 'block';
         }
 
-        // إضافة تفاعل عند الضغط على Enter
+        function copyToClipboard() {
+            const generatedCode = document.getElementById('generatedCode').textContent;
+            navigator.clipboard.writeText(generatedCode).then(() => {
+                alert('✅ تم نسخ الكود إلى الحافظة!');
+            }).catch(err => {
+                alert('❌ حدث خطأ أثناء النسخ!');
+            });
+        }
+
         document.getElementById('nationalId').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') generateCode();
         });
 
-        // منع إدخال أي شيء غير أرقام
         document.getElementById('nationalId').addEventListener('input', (e) => {
             e.target.value = e.target.value.replace(/\D/g, '');
         });
