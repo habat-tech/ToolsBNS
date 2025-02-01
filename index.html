@@ -194,6 +194,7 @@
             1. آخر 5 أرقام من الرقم القومي<br>
             2. يبدأ الرقم القومي الصحيح بـ 2 أو 3<br>
             3. اللاحقة الثابتة @sis
+            4. اضغط ع كلمة السر المستخرجة وسوف يتم النسخ تلقائي
         </div>
     </div>
     <footer>
@@ -224,7 +225,7 @@
             const finalCode = `${lastFiveDigits}@sis`;
 
             resultDiv.className = 'success';
-            resultDiv.innerHTML = `كلمة السر: <span id="generatedCode" style="color: #31708f; font-family: monospace">${finalCode}</span>`;
+            resultDiv.innerHTML = ` اضغط لنسخ كلمة السر: <span id="generatedCode" style="color: #31708f; font-family: monospace">${finalCode}</span>`;
             resultDiv.style.display = 'block';
         }
 
