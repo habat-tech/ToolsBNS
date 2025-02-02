@@ -26,19 +26,20 @@
         function calculateGrade() {
             let gpa = parseFloat(document.getElementById('gpa').value);
             let grade = "";
+            let percentage = 0;
             
-            if (gpa >= 3.8) grade = "ممتاز (A+)";
-            else if (gpa >= 3.6) grade = "ممتاز (A)";
-            else if (gpa >= 3.4) grade = "ممتاز (A-)";
-            else if (gpa >= 3.2) grade = "جيد جدًا (B+)";
-            else if (gpa >= 3.0) grade = "جيد جدًا (B)";
-            else if (gpa >= 2.8) grade = "جيد (C+)";
-            else if (gpa >= 2.6) grade = "جيد (C)";
-            else if (gpa >= 2.4) grade = "مقبول (D)";
-            else if (gpa >= 0) grade = "راسب (F)";
-            else grade = "قيمة غير صالحة";
+            if (gpa >= 3.8) { grade = "ممتاز (A+)"; percentage = "95% - 100%"; }
+            else if (gpa >= 3.6) { grade = "ممتاز (A)"; percentage = "90% - 95%"; }
+            else if (gpa >= 3.4) { grade = "ممتاز (A-)"; percentage = "85% - 90%"; }
+            else if (gpa >= 3.2) { grade = "جيد جدًا (B+)"; percentage = "80% - 85%"; }
+            else if (gpa >= 3.0) { grade = "جيد جدًا (B)"; percentage = "75% - 80%"; }
+            else if (gpa >= 2.8) { grade = "جيد (C+)"; percentage = "70% - 75%"; }
+            else if (gpa >= 2.6) { grade = "جيد (C)"; percentage = "65% - 70%"; }
+            else if (gpa >= 2.4) { grade = "مقبول (D)"; percentage = "60% - 65%"; }
+            else if (gpa >= 0) { grade = "راسب (F)"; percentage = "أقل من 60%"; }
+            else { grade = "قيمة غير صالحة"; percentage = "-"; }
             
-            document.getElementById('result').innerText = "تقديرك: " + grade;
+            document.getElementById('result').innerText = "تقديرك: " + grade + "\nالنسبة المئوية: " + percentage;
         }
     </script>
 </body>
