@@ -26,18 +26,20 @@
         function calculateGrade() {
             let gpa = parseFloat(document.getElementById('gpa').value);
             let grade = "";
-            let percentage = 0;
+            let percentage = "";
             
-            if (gpa >= 3.8) { grade = "ممتاز (A+)"; percentage = "95% - 100%"; }
-            else if (gpa >= 3.6) { grade = "ممتاز (A)"; percentage = "90% - 95%"; }
-            else if (gpa >= 3.4) { grade = "ممتاز (A-)"; percentage = "85% - 90%"; }
-            else if (gpa >= 3.2) { grade = "جيد جدًا (B+)"; percentage = "80% - 85%"; }
-            else if (gpa >= 3.0) { grade = "جيد جدًا (B)"; percentage = "75% - 80%"; }
-            else if (gpa >= 2.8) { grade = "جيد (C+)"; percentage = "70% - 75%"; }
-            else if (gpa >= 2.6) { grade = "جيد (C)"; percentage = "65% - 70%"; }
-            else if (gpa >= 2.4) { grade = "مقبول (D)"; percentage = "60% - 65%"; }
-            else if (gpa >= 0) { grade = "راسب (F)"; percentage = "أقل من 60%"; }
-            else { grade = "قيمة غير صالحة"; percentage = "-"; }
+            if (gpa >= 3.8) { grade = "ممتاز مرتفع (A+)", percentage = "95% - 100%"; }
+            else if (gpa >= 3.6) { grade = "ممتاز (A)", percentage = "90% - 95%"; }
+            else if (gpa >= 3.4) { grade = "ممتاز منخفض (A-)", percentage = "85% - 90%"; }
+            else if (gpa >= 3.2) { grade = "جيد جدًا مرتفع (B+)", percentage = "80% - 85%"; }
+            else if (gpa >= 3.0) { grade = "جيد جدًا (B)", percentage = "75% - 80%"; }
+            else if (gpa >= 2.8) { grade = "جيد جدًا منخفض (B-)", percentage = "70% - 75%"; }
+            else if (gpa >= 2.6) { grade = "جيد مرتفع (C+)", percentage = "65% - 70%"; }
+            else if (gpa >= 2.4) { grade = "جيد (C)", percentage = "60% - 65%"; }
+            else if (gpa >= 2.0) { grade = "جيد منخفض (C-)", percentage = "55% - 60%"; }
+            else if (gpa >= 1.8) { grade = "مقبول مرتفع (D+)", percentage = "50% - 55%"; }
+            else if (gpa >= 1.6) { grade = "مقبول (D)", percentage = "45% - 50%"; }
+            else { grade = "راسب (F)", percentage = "أقل من 45%"; }
             
             document.getElementById('result').innerText = "تقديرك: " + grade + "\nالنسبة المئوية: " + percentage;
         }
