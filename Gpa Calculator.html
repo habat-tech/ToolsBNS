@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة التقدير الجامعي</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; background-color: #f4f4f4; }
+        .container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); display: inline-block; }
+        input, button { padding: 10px; margin: 10px; font-size: 18px; }
+        button { background: #007BFF; color: white; border: none; cursor: pointer; border-radius: 5px; }
+        button:hover { background: #0056b3; }
+        #result { font-size: 20px; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>حاسبة التقدير الجامعي (GPA)</h2>
+        <p>أدخل المعدل التراكمي (GPA):</p>
+        <input type="number" id="gpa" step="0.01" min="0" max="4" placeholder="مثال: 3.5">
+        <button onclick="calculateGrade()">احسب التقدير</button>
+        <p id="result"></p>
+    </div>
+    
+    <script>
+        function calculateGrade() {
+            let gpa = parseFloat(document.getElementById('gpa').value);
+            let grade = "";
+            
+            if (gpa >= 3.8) grade = "ممتاز (A+)";
+            else if (gpa >= 3.6) grade = "ممتاز (A)";
+            else if (gpa >= 3.4) grade = "ممتاز (A-)";
+            else if (gpa >= 3.2) grade = "جيد جدًا (B+)";
+            else if (gpa >= 3.0) grade = "جيد جدًا (B)";
+            else if (gpa >= 2.8) grade = "جيد (C+)";
+            else if (gpa >= 2.6) grade = "جيد (C)";
+            else if (gpa >= 2.4) grade = "مقبول (D)";
+            else if (gpa >= 0) grade = "راسب (F)";
+            else grade = "قيمة غير صالحة";
+            
+            document.getElementById('result').innerText = "تقديرك: " + grade;
+        }
+    </script>
+</body>
+</html>
