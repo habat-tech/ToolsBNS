@@ -3,254 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>توليد كلمة سر الطالب</title>
+    <title>أدوات طلابية - حاسبة التقدير وتوليد كلمة السر</title>
+    
+    <!-- الخطوط -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
-        
+        /* أنماط عامة */
         body {
             font-family: 'Tajawal', sans-serif;
             background-color: #f0f0f0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             margin: 0;
             padding: 1rem;
+            min-height: 100vh;
         }
-        .container {
-            background-color: white;
+        
+        /* حاوية الأدوات */
+        .tool-container {
+            background: white;
             padding: 1.5rem;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            text-align: center;
-            width: 100%;
-            max-width: 500px;
-            margin: auto;
+            max-width: 600px;
+            margin: 2rem auto;
         }
-        h1 {
-            color: #333;
-            margin: 0 0 1.5rem;
-            font-weight: 700;
-            font-size: 1.75rem;
-            line-height: 1.3;
+        
+        /* أنماط حاسبة التقدير */
+        .gpa-calculator {
+            font-family: 'Amiri', serif;
         }
-        input {
-            width: 100%;
-            padding: 0.75rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            text-align: center;
-            background-color: #fff;
-            font-family: 'Tajawal', sans-serif;
-            box-sizing: border-box;
-            min-height: 45px;
+        
+        .gpa-calculator h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
         }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 0.75rem 0.5rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-            width: 100%;
-            font-family: 'Tajawal', sans-serif;
-            font-weight: 700;
-            min-height: 45px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        #result {
-            margin-top: 1.5rem;
-            padding: 1rem;
+        
+        .gpa-calculator input {
+            border: 2px solid #3498db;
             font-size: 1.1rem;
-            font-weight: bold;
-            display: none;
+        }
+        
+        .gpa-calculator button {
+            background: #3498db;
+            margin-top: 1rem;
+        }
+        
+        /* أنماط مولد كلمة السر */
+        .password-generator h1 {
+            color: #27ae60;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .password-generator input {
+            border: 2px solid #27ae60;
+        }
+        
+        .password-generator button {
+            background: #27ae60;
+        }
+        
+        /* أنماط مشتركة */
+        input, button {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
             border-radius: 5px;
-            word-break: break-all;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        
+        button {
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+        
+        button:hover {
+            opacity: 0.9;
+        }
+        
+        .result-box {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+            display: none;
             cursor: pointer;
         }
-        .success {
-            background-color: #dff0d8;
-            color: #3c763d;
-            border: 1px solid #d6e9c6;
-        }
-        .error {
-            background-color: #f2dede;
-            color: #a94442;
-            border: 1px solid #ebccd1;
-        }
-        .info {
-            background-color: #d9edf7;
-            color: #31708f;
-            border: 1px solid #bce8f1;
-            margin-top: 1rem;
-            padding: 1rem;
-            font-size: 0.9rem;
-            border-radius: 5px;
-            line-height: 1.6;
-        }
+        
+        .success { background: #e8f6e8; color: #2ecc71; }
+        .error { background: #fdecea; color: #e74c3c; }
+        .info { background: #f0f8ff; color: #2980b9; }
+        
         footer {
-            margin-top: 2rem;
             text-align: center;
-            font-size: 0.8rem;
-            color: #666;
-            width: 100%;
-            max-width: 500px;
-            padding: 0 1rem;
+            color: #7f8c8d;
+            padding: 1rem;
+            margin-top: auto;
         }
-        footer a {
-            color: #4CAF50;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* تحسينات التجاوب */
+        
         @media (max-width: 768px) {
-            .container {
-                padding: 2rem 1.5rem;
-            }
-            h1 {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-            .container {
+            .tool-container {
                 padding: 1rem;
             }
-            button, input {
-                font-size: 0.95rem;
-            }
-        }
-
-        @media (max-width: 400px) {
-            h1 {
-                font-size: 1.25rem;
-            }
-            input, button {
-                padding: 0.6rem;
-                font-size: 0.9rem;
-            }
-            .info {
-                font-size: 0.8rem;
-                padding: 0.8rem;
-            }
-            footer {
-                font-size: 0.7rem;
-            }
-        }
-
-        @media (max-width: 360px) {
-            h1 {
-                font-size: 1.3rem;
-            }
-            .info {
-                font-size: 0.85rem;
-                padding: 0.75rem;
-            }
-            #result {
-                font-size: 1rem;
-                padding: 0.75rem;
-            }
-        }
-
-        @media (max-width: 340px) {
-            h1 {
-                font-size: 1.1rem;
-            }
-            input::placeholder {
-                font-size: 0.8rem;
-            }
-            .info {
-                font-size: 0.75rem;
+            
+            h1, h2 {
+                font-size: 1.5rem !important;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>نظام توليد كلمة سر الطالب</h1>
+    <!-- حاسبة التقدير الجامعي -->
+    <div class="tool-container gpa-calculator">
+        <h2>حاسبة التقدير الجامعي</h2>
+        <input type="number" 
+               id="gpa" 
+               step="0.01" 
+               min="0" 
+               max="4" 
+               placeholder="أدخل المعدل التراكمي (مثال: 3.5)">
+        <button onclick="calculateGrade()">احسب التقدير</button>
+        <div id="gpa-result" class="result-box"></div>
+    </div>
+
+    <!-- مولد كلمة السر -->
+    <div class="tool-container password-generator">
+        <h1>توليد كلمة سر الطالب</h1>
         <input type="text" 
                id="nationalId" 
                placeholder="الرقم القومي (14 رقم)"
                maxlength="14" 
                inputmode="numeric">
         <button onclick="generateCode()">توليد الكود</button>
-        <div id="result" onclick="copyToClipboard()"></div>
+        <div id="password-result" class="result-box"></div>
         <div class="info">
-            سيتم توليد كلمة السر بناءً على:<br>
-            1. آخر 5 أرقام من الرقم القومي<br>
-            2. يبدأ الرقم القومي الصحيح بـ 2 أو 3<br>
-            3. اللاحقة الثابتة @sis <br>
-            4. اضغط ع كلمة السر المستخرجة وسوف يتم النسخ تلقائي
+            شروط التوليد:<br>
+            - آخر 5 أرقام من الرقم القومي<br>
+            - يبدأ الرقم القومي بـ 2 أو 3<br>
+            - إضافة اللاحقة الثابتة @sis
         </div>
     </div>
+
     <footer>
-        تم التصميم بواسطة 
-        <a href="https://www.facebook.com/alproda" target="_blank" rel="noopener">احمد رجب</a>
-        &copy; 2025
+        تم تطوير الأدوات بواسطة 
+        <span style="color: #3498db; font-weight: bold">فريق الدعم الأكاديمي</span>
+        © 2024
     </footer>
 
     <script>
+        // دوال حاسبة التقدير
+        function calculateGrade() {
+            const gpa = parseFloat(document.getElementById('gpa').value);
+            const resultDiv = document.getElementById('gpa-result');
+            
+            const grades = [
+                {min: 3.8, grade: "ممتاز مرتفع (A+)", percentage: "95% - 100%"},
+                {min: 3.6, grade: "ممتاز (A)", percentage: "90% - 95%"},
+                {min: 3.4, grade: "ممتاز منخفض (A-)", percentage: "85% - 90%"},
+                {min: 3.2, grade: "جيد جدًا مرتفع (B+)", percentage: "80% - 85%"},
+                {min: 3.0, grade: "جيد جدًا (B)", percentage: "75% - 80%"},
+                {min: 2.8, grade: "جيد جدًا منخفض (B-)", percentage: "70% - 75%"},
+                {min: 2.6, grade: "جيد مرتفع (C+)", percentage: "65% - 70%"},
+                {min: 2.4, grade: "جيد (C)", percentage: "60% - 65%"},
+                {min: 2.0, grade: "جيد منخفض (C-)", percentage: "55% - 60%"},
+                {min: 1.8, grade: "مقبول مرتفع (D+)", percentage: "50% - 55%"},
+                {min: 1.6, grade: "مقبول (D)", percentage: "45% - 50%"},
+                {min: 0, grade: "راسب (F)", percentage: "أقل من 45%"}
+            ];
+
+            if (isNaN(gpa) || gpa < 0 || gpa > 4) {
+                showResult(resultDiv, 'error', 'الرجاء إدخال معدل تراكمي صحيح (0-4)');
+                return;
+            }
+
+            for (const item of grades) {
+                if (gpa >= item.min) {
+                    showResult(resultDiv, 'success', 
+                        `التقدير: ${item.grade}\nالنسبة المئوية: ${item.percentage}`);
+                    return;
+                }
+            }
+        }
+
+        // دوال مولد كلمة السر
         function generateCode() {
             const nationalId = document.getElementById('nationalId').value.trim();
-            const resultDiv = document.getElementById('result');
-
-            resultDiv.style.display = 'none';
+            const resultDiv = document.getElementById('password-result');
 
             if (!/^\d{14}$/.test(nationalId)) {
-                showError('! الرجاء إدخال رقم قومي صحيح (14 رقمًا)');
+                showResult(resultDiv, 'error', '! الرجاء إدخال رقم قومي صحيح (14 رقمًا)');
                 return;
             }
 
-            const firstDigit = nationalId.charAt(0);
-            if (!['2', '3'].includes(firstDigit)) {
-                showError('! الرقم القومي يجب أن يبدأ بـ 2 أو 3');
+            if (!['2', '3'].includes(nationalId.charAt(0))) {
+                showResult(resultDiv, 'error', '! يجب أن يبدأ الرقم القومي بـ 2 أو 3');
                 return;
             }
 
-            const lastFiveDigits = nationalId.slice(-5);
-            const finalCode = `${lastFiveDigits}@sis`;
-
-            resultDiv.className = 'success';
-            resultDiv.innerHTML = ` اضغط لنسخ كلمة السر: <span id="generatedCode" style="color: #31708f; font-family: monospace">${finalCode}</span>`;
-            resultDiv.style.display = 'block';
+            const password = `${nationalId.slice(-5)}@sis`;
+            showResult(resultDiv, 'success', 
+                `كلمة السر: <span class="password">${password}</span> (انقر للنسخ)`);
         }
 
-        function showError(message) {
-            const resultDiv = document.getElementById('result');
-            resultDiv.className = 'error';
-            resultDiv.innerHTML = message;
-            resultDiv.style.display = 'block';
+        // دوال مساعدة
+        function showResult(element, type, message) {
+            element.className = `result-box ${type}`;
+            element.innerHTML = message;
+            element.style.display = 'block';
         }
 
-        function copyToClipboard() {
-            const generatedCode = document.getElementById('generatedCode').textContent;
-            navigator.clipboard.writeText(generatedCode).then(() => {
-                alert('✅ تم نسخ الكود إلى الحافظة!');
-            }).catch(err => {
-                alert('❌ حدث خطأ أثناء النسخ!');
-            });
-        }
-
-        document.getElementById('nationalId').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') generateCode();
+        document.body.addEventListener('click', (e) => {
+            if (e.target.closest('.result-box')) {
+                const text = e.target.querySelector('.password')?.textContent;
+                if (text) {
+                    navigator.clipboard.writeText(text);
+                    alert('تم النسخ إلى الحافظة!');
+                }
+            }
         });
 
-        document.getElementById('nationalId').addEventListener('input', (e) => {
-            e.target.value = e.target.value.replace(/\D/g, '');
+        // التحقق من المدخلات
+        document.getElementById('nationalId').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '');
         });
     </script>
 </body>
