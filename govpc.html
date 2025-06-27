@@ -36,7 +36,10 @@
             margin-bottom: 30px;
             position: relative;
         }
-        
+                .header {
+            position: relative;
+            padding-top: 60px;
+        }
         .logo {
             font-size: 3.5rem;
             color: #556B2F;
@@ -314,7 +317,37 @@
         footer a:hover {
             text-decoration: underline;
         }
+    
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #7a904c, #556B2F);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(85, 107, 47, 0.3);
+            z-index: 100;
+            text-decoration: none;
+        }
         
+        .home-btn:hover {
+            background: linear-gradient(135deg, #556B2F, #3D4D21);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(61, 77, 33, 0.4);
+        }
+        
+        .home-btn:active {
+            transform: translateY(1px);
+        }
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -345,6 +378,16 @@
             
             .result-value {
                 font-size: 2rem;
+            }
+               .home-btn {
+                top: 10px;
+                left: 10px;
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .header {
+                padding-top: 50px;
             }
         }
         
