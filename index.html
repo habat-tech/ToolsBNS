@@ -22,6 +22,7 @@
       --white: #fff;
       --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       --transition: all 0.3s ease;
+      --percentage-color: #2c3e50;
     }
     
     * {
@@ -119,7 +120,7 @@
       font-size: 1.3rem;
     }
     
-    .tool-container, .gov-gpa-container, .about-container {
+    .tool-container, .about-container, .percentage-container {
       background: var(--card-bg);
       padding: 2.2rem;
       border-radius: 15px;
@@ -131,7 +132,7 @@
       animation: fadeIn 0.5s ease-out;
     }
     
-    .tool-container:hover, .gov-gpa-container:hover, .about-container:hover {
+    .tool-container:hover, .about-container:hover, .percentage-container:hover {
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
       transform: translateY(-3px);
     }
@@ -226,12 +227,12 @@
       box-shadow: 0 6px 12px rgba(107, 142, 35, 0.4);
     }
     
-    .gov-gpa-container button {
+    .percentage-container button {
       background: linear-gradient(135deg, #7a904c, #556B2F);
       box-shadow: 0 4px 8px rgba(122, 144, 76, 0.3);
     }
     
-    .gov-gpa-container button:hover {
+    .percentage-container button:hover {
       background: linear-gradient(135deg, #556B2F, #3D4D21);
       box-shadow: 0 6px 12px rgba(85, 107, 47, 0.4);
     }
@@ -321,18 +322,6 @@
       align-items: center;
       gap: 10px;
       font-size: 1.3rem;
-    }
-    
-    .gov-gpa-container {
-      text-align: center;
-      padding: 2.8rem;
-    }
-    
-    .gov-icon {
-      font-size: 4.5rem;
-      color: var(--nursing-color);
-      margin-bottom: 1.8rem;
-      animation: bounce 2s infinite;
     }
     
     /* قسم نبذة عن المطور */
@@ -523,6 +512,114 @@
       width: 100%;
     }
     
+    /* تصميم حاسبة النسبة المئوية */
+    .percentage-container {
+      padding: 2rem;
+    }
+    
+    .input-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .input-icon {
+      position: absolute;
+      right: 15px;
+      color: var(--nursing-color);
+      font-size: 1.3rem;
+    }
+    
+    .example {
+      color: #7a904c;
+      font-size: 0.95rem;
+      margin-top: 8px;
+      font-style: italic;
+    }
+    
+    .calculation-steps {
+      background: #f8faf0;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 25px;
+      border: 1px dashed #7a904c;
+    }
+    
+    .calculation-steps h3 {
+      color: var(--nursing-color);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+    
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 15px;
+    }
+    
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+      background: rgba(85, 107, 47, 0.05);
+      border-radius: 8px;
+    }
+    
+    .step-number {
+      background: var(--nursing-color);
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    
+    .result-box-percentage {
+      background: #f0f7e9;
+      padding: 25px;
+      border-radius: 15px;
+      border-left: 5px solid var(--nursing-color);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .result-title {
+      font-size: 1.3rem;
+      color: var(--nursing-color);
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+    
+    .result-value {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #3D4D21;
+      margin: 10px 0;
+    }
+    
+    .error-message {
+      color: #c0392b;
+      background: #fadbd8;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      text-align: center;
+      display: none;
+      border-left: 5px solid #c0392b;
+      font-weight: bold;
+    }
+    
     @media (max-width: 768px) {
       .tool-menu {
         flex-direction: column;
@@ -535,7 +632,7 @@
         padding: 1rem;
       }
       
-      .tool-container, .gov-gpa-container, .about-container {
+      .tool-container, .about-container, .percentage-container {
         padding: 1.8rem;
       }
       
@@ -545,10 +642,6 @@
       
       h2 {
         font-size: 1.6rem;
-      }
-      
-      .gov-icon {
-        font-size: 3.5rem;
       }
       
       .developer-info {
@@ -590,7 +683,7 @@
         font-size: 1rem;
       }
       
-      .tool-container, .gov-gpa-container, .about-container {
+      .tool-container, .about-container, .percentage-container {
         padding: 1.5rem;
       }
       
@@ -603,6 +696,10 @@
         width: 100%;
         justify-content: center;
       }
+      
+      .result-value {
+        font-size: 2rem;
+      }
     }
     
     .hidden {
@@ -614,12 +711,6 @@
       0% { transform: scale(1); }
       50% { transform: scale(1.05); }
       100% { transform: scale(1); }
-    }
-    
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-      40% {transform: translateY(-20px);}
-      60% {transform: translateY(-10px);}
     }
     
     @keyframes fadeIn {
@@ -692,9 +783,9 @@
         <i class="fas fa-key"></i>
         توليد كلمة سر
       </li>
-      <li data-target="govGpaSection">
-        <i class="fas fa-university"></i>
-        حساب التقدير الجامعي للحكومي
+      <li data-target="percentageSection">
+        <i class="fas fa-percentage"></i>
+        حاسبة النسبة المئوية
       </li>
     </ul>
   </header>
@@ -789,23 +880,64 @@
         </ul>
       </div>
     </section>
-
-    <!-- قسم حساب التقدير الجامعي للحكومي -->
-    <section id="govGpaSection" class="gov-gpa-container hidden">
-      <div class="gov-icon">
-        <i class="fas fa-university"></i>
+    
+    <!-- قسم حاسبة النسبة المئوية -->
+    <section id="percentageSection" class="percentage-container hidden">
+      <div class="section-title">
+        <i class="fas fa-percentage"></i>
+        <h2>حاسبة النسبة المئوية</h2>
       </div>
       
-      <h2>حساب التقدير الجامعي للحكومي</h2>
-      <p style="margin-bottom: 1.8rem; font-size: 1.1rem;">انقر على الزر بالأسفل للانتقال إلى أداة حساب التقدير الجامعي للحكومي المخصصة لطلاب التمريض</p>
+      <div class="input-group">
+        <label for="gradesInput">
+          <i class="fas fa-graduation-cap"></i> أدخل درجاتك (مفصولة بفواصل)
+        </label>
+        <div class="input-container">
+          <i class="fas fa-pen input-icon"></i>
+          <input type="text" id="gradesInput" placeholder="مثال: 80, 90, 85" />
+        </div>
+        <p class="example">تأكد من أن جميع القيم أرقام صحيحة ويفضل أن تكون مفصولة بفاصلة (`,`).</p>
+      </div>
       
-      <button onclick="window.location.href='https://habat-tech.github.io/ToolsBNS/govpc'">
-        <i class="fas fa-external-link-alt"></i> الانتقال إلى الحاسبة الحكومية
+      <button onclick="calculatePercentage()">
+        <i class="fas fa-calculator"></i> احسب النسبة المئوية
       </button>
       
-      <div class="explanation" style="margin-top: 2.2rem;">
-        <h3><i class="fas fa-info-circle"></i> عن هذه الأداة</h3>
-        <p>توفر هذه الأداة المتخصصة حساب التقدير الجامعي للطلاب في كليات التمريض الحكومية. تقوم بحساب المعدل التراكمي بناءً على نظام النقاط المعتمد في الجامعات الحكومية.</p>
+      <div class="error-message" id="error-message"></div>
+      
+      <div id="result-container" class="result-container hidden">
+        <div class="result-box-percentage">
+          <div class="result-title">
+            <i class="fas fa-chart-line"></i> النتيجة النهائية
+          </div>
+          <div class="result-value" id="result-value"></div>
+          <p id="result-text"></p>
+        </div>
+        
+        <div class="calculation-steps">
+          <h3>
+            <i class="fas fa-list-ol"></i> خطوات الحساب
+          </h3>
+          <div class="steps" id="steps-container"></div>
+        </div>
+      </div>
+      
+      <div class="info-box">
+        <h3>
+          <i class="fas fa-info-circle"></i> معلومات عن الحاسبة
+        </h3>
+        <div class="info-content">
+          <p>تقوم هذه الحاسبة بحساب النسبة المئوية لمجموعة من الدرجات باستخدام الصيغة التالية:</p>
+          <p style="text-align: center; margin: 15px 0; font-weight: bold; font-size: 1.2rem;">
+            النسبة المئوية = (900 - مجموع الدرجات) ÷ 9
+          </p>
+          <ul>
+            <li>أدخل الدرجات مفصولة بفواصل (مثال: 80, 90, 85)</li>
+            <li>يمكنك إدخال أي عدد من الدرجات</li>
+            <li>يجب أن تكون جميع القيم أرقام صحيحة أو عشرية</li>
+            <li>النتيجة ستظهر مع خطوات الحساب التفصيلية</li>
+          </ul>
+        </div>
       </div>
     </section>
   </main>
@@ -854,6 +986,7 @@
         {min: 3.6, grade: "ممتاز (A)", percentage: "90% - 95%"},
         {min: 3.4, grade: "ممتاز منخفض (A-)", percentage: "85% - 90%"},
         {min: 3.2, grade: "جيد جدًا مرتفع (B+)", percentage: "80% - 85%"},
+        {min: 3.0, grade: "جيد جدًا (B)", percentage: "75% - 80%"},
         {min: 3.0, grade: "جيد جدًا (B)", percentage: "75% - 80%"},
         {min: 2.8, grade: "جيد جدًا منخفض (B-)", percentage: "70% - 75%"},
         {min: 2.6, grade: "جيد مرتفع (C+)", percentage: "65% - 70%"},
@@ -951,6 +1084,114 @@
         });
       }
     });
+    
+    // دوال حاسبة النسبة المئوية
+    function calculatePercentage() {
+      // الحصول على قيم المدخلات
+      const gradesInput = document.getElementById('gradesInput').value;
+      const errorMessage = document.getElementById('error-message');
+      const resultContainer = document.getElementById('result-container');
+      const resultValue = document.getElementById('result-value');
+      const resultText = document.getElementById('result-text');
+      const stepsContainer = document.getElementById('steps-container');
+      
+      // إخفاء الرسائل السابقة
+      errorMessage.style.display = 'none';
+      resultContainer.style.display = 'none';
+      stepsContainer.innerHTML = '';
+      
+      // التحقق من أن الحقل غير فارغ
+      if (!gradesInput.trim()) {
+        errorMessage.textContent = 'من فضلك أدخل درجاتك أولاً';
+        errorMessage.style.display = 'block';
+        return;
+      }
+      
+      // تقسيم المدخلات إلى مصفوفة من الأرقام
+      const gradesArray = gradesInput.split(',').map(item => {
+        // إزالة المسافات والحروف غير المرغوب فيها
+        const cleanedItem = item.trim().replace(/[^0-9.]/g, '');
+        return cleanedItem ? parseFloat(cleanedItem) : NaN;
+      });
+      
+      // التحقق من وجود أرقام غير صالحة
+      if (gradesArray.some(isNaN)) {
+        errorMessage.textContent = 'تحتوي المدخلات على قيم غير صالحة. يرجى إدخال أرقام فقط مفصولة بفواصل.';
+        errorMessage.style.display = 'block';
+        return;
+      }
+      
+      // حساب المجموع
+      const total = gradesArray.reduce((sum, grade) => sum + grade, 0);
+      
+      // حساب النسبة المئوية
+      const percentage = (900 - total) / 9;
+      
+      // عرض النتيجة
+      resultValue.textContent = percentage.toFixed(2) + '%';
+      resultText.textContent = `بناءً على ${gradesArray.length} درجات`;
+      resultContainer.style.display = 'block';
+      resultContainer.classList.remove('hidden');
+      
+      // إظهار خطوات الحساب
+      showCalculationSteps(gradesArray, total, percentage);
+    }
+    
+    function showCalculationSteps(grades, total, percentage) {
+      const stepsContainer = document.getElementById('steps-container');
+      
+      // الخطوة 1: عرض الدرجات المدخلة
+      const step1 = document.createElement('div');
+      step1.className = 'step';
+      step1.innerHTML = `
+        <div class="step-number">1</div>
+        <div>الدرجات المدخلة: <strong>${grades.join(', ')}</strong></div>
+      `;
+      stepsContainer.appendChild(step1);
+      
+      // الخطوة 2: حساب مجموع الدرجات
+      const step2 = document.createElement('div');
+      step2.className = 'step';
+      step2.innerHTML = `
+        <div class="step-number">2</div>
+        <div>مجموع الدرجات: <strong>${total.toFixed(2)}</strong></div>
+      `;
+      stepsContainer.appendChild(step2);
+      
+      // الخطوة 3: تطبيق الصيغة
+      const step3 = document.createElement('div');
+      step3.className = 'step';
+      step3.innerHTML = `
+        <div class="step-number">3</div>
+        <div>تطبيق الصيغة: (900 - ${total.toFixed(2)}) ÷ 9 = ${(900 - total).toFixed(2)} ÷ 9</div>
+      `;
+      stepsContainer.appendChild(step3);
+      
+      // الخطوة 4: النتيجة النهائية
+      const step4 = document.createElement('div');
+      step4.className = 'step';
+      step4.innerHTML = `
+        <div class="step-number">4</div>
+        <div>النسبة المئوية: <strong>${percentage.toFixed(2)}%</strong></div>
+      `;
+      stepsContainer.appendChild(step4);
+      
+      // الخطوة 5: تقييم النتيجة
+      let evaluation = '';
+      if (percentage >= 90) evaluation = 'ممتاز! أداء رائع';
+      else if (percentage >= 80) evaluation = 'جيد جداً! أداء ممتاز';
+      else if (percentage >= 70) evaluation = 'جيد! أداء مقبول';
+      else if (percentage >= 60) evaluation = 'مقبول، يمكنك التحسين';
+      else evaluation = 'يحتاج إلى تحسين';
+      
+      const step5 = document.createElement('div');
+      step5.className = 'step';
+      step5.innerHTML = `
+        <div class="step-number">5</div>
+        <div>تقييم النتيجة: <strong>${evaluation}</strong></div>
+      `;
+      stepsContainer.appendChild(step5);
+    }
   </script>
 </body>
 </html>
