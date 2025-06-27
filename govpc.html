@@ -1,6 +1,73 @@
 <!DOCTYPE html>
+<html lang="ar">
 <html lang="ar" dir="rtl">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة النسبة المئوية</title>
+    <!-- إضافة خط عربي من Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f9;
+            margin: 0;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        input, button {
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 400px;
+            box-sizing: border-box;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .info {
+            color: #555;
+            font-size: 14px;
+        }
+        footer {
+            margin-top: 50px;
+            font-size: 14px;
+            color: #777;
+        }
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>أدوات طلاب التمريض</title>
@@ -738,6 +805,10 @@
       </div>
     </section>
 
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     <!-- قسم حاسبة التقدير الجامعي للاهلية -->
     <section id="gpaSection" class="tool-container gpa-calculator hidden">
       <div class="section-title">
@@ -762,6 +833,16 @@
       </div>
     </section>
 
+        /* استعلامات الوسائط لتحسين التجاوب */
+        @media (max-width: 768px) {
+            body {
+                padding: 30px;
+            }
+            input, button {
+                width: 90%;
+                max-width: 100%;
+            }
+        }
     <!-- قسم توليد كلمة سر الطالب -->
     <section id="passwordSection" class="tool-container password-generator hidden">
       <div class="section-title">
@@ -790,6 +871,25 @@
       </div>
     </section>
 
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 24px;
+            }
+            .info {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>حاسبة النسبة المئوية</h1>
+    <p>ادخل درجاتك واحدة تلو الأخرى (افصل بين كل درجة وفاصلة `,`):</p>
+    <input type="text" id="gradesInput" placeholder="مثال: 80, 90, 85" />
+    <button onclick="calculatePercentage()">احسب النسبة المئوية</button>
+    
+    <div id="result"></div>
+    <div id="error-message" class="error"></div>
+    <div class="info">تأكد من أن جميع القيم أرقام صحيحة ويفضل أن تكون مفصولة بفاصلة (`,`).</div>
     <!-- قسم حساب التقدير الجامعي للحكومي -->
     <section id="govGpaSection" class="gov-gpa-container hidden">
       <div class="gov-icon">
@@ -844,11 +944,22 @@
         });
       });
 
+    <script>
+        function calculatePercentage() {
+            var gradesInput = document.getElementById('gradesInput').value;
+            var errorMessage = document.getElementById('error-message');
+            var resultDiv = document.getElementById('result');
+            errorMessage.innerText = ''; // مسح أي رسائل خطأ سابقة
+            resultDiv.innerText = ''; // مسح أي نتيجة سابقة
       // دوال حاسبة التقدير الجامعي
       const gpaInput = document.getElementById('gpa');
       const gpaResult = document.getElementById('gpa-result');
       const calculateBtn = document.getElementById('calculateBtn');
 
+            if (gradesInput === '') {
+                errorMessage.innerText = 'من فضلك أدخل درجاتك';
+                return;
+            }
       const grades = [
         {min: 3.8, grade: "ممتاز مرتفع (A+)", percentage: "95% - 100%"},
         {min: 3.6, grade: "ممتاز (A)", percentage: "90% - 95%"},
@@ -864,6 +975,10 @@
         {min: 0, grade: "راسب (F)", percentage: "أقل من 45%"}
       ];
 
+            // تحويل النص المدخل إلى مصفوفة أرقام
+            var gradesArray = gradesInput.split(',').map(function(item) {
+                return parseInt(item.trim(), 10);
+            });
       calculateBtn.addEventListener('click', () => {
         const gpa = parseFloat(gpaInput.value);
         if (isNaN(gpa)) {
@@ -888,11 +1003,20 @@
         }
       });
 
+            // التأكد من أن جميع القيم المدخلة أرقام صحيحة
+            if (gradesArray.some(isNaN)) {
+                errorMessage.innerText = 'من فضلك أدخل أرقام صحيحة فقط مفصولة بفاصلة (`,`)';
+                return;
+            }
       // دوال مولد كلمة السر
       const nationalIdInput = document.getElementById('nationalId');
       const passwordResult = document.getElementById('password-result');
       const generateBtn = document.getElementById('generateBtn');
 
+            // جمع الدرجات
+            var totalGrades = gradesArray.reduce(function(sum, current) {
+                return sum + current;
+            }, 0);
       generateBtn.addEventListener('click', () => {
         const nationalId = nationalIdInput.value.trim();
         if (!/^\d{14}$/.test(nationalId)) {
@@ -911,6 +1035,10 @@
         `);
       });
 
+            // حساب النتيجة
+            var result = 900 - totalGrades;
+            var percentage = result / 9;
+            var percentageText = 'النسبة المئوية هي: ' + percentage.toFixed(2) + '%';
       // دالة عرض النتائج
       function showResult(element, type, message) {
         element.className = `result-box ${type}`;
@@ -918,6 +1046,7 @@
         element.style.display = 'block';
       }
 
+            resultDiv.innerText = percentageText;
       // نسخ كلمة السر إلى الحافظة عند النقر
       passwordResult.addEventListener('click', (e) => {
         const passwordSpan = passwordResult.querySelector('.password');
@@ -932,8 +1061,12 @@
             alert('حدث خطأ أثناء النسخ!');
           });
         }
+    </script>
       });
 
+    <footer>
+        <p>تم التصميم بواسطة <a href="https://www.facebook.com/alproda" target="_blank">أحمد رجب يوسف</a></p>
+    </footer>
       // التأكد من أن الإدخال للرقم القومي يحتوي على أرقام فقط
       nationalIdInput.addEventListener('input', function() {
         this.value = this.value.replace(/\D/g, '');
