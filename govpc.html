@@ -1,1089 +1,556 @@
 <!DOCTYPE html>
-<html lang="ar">
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حاسبة النسبة المئوية</title>
-    <!-- إضافة خط عربي من Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-            text-align: center;
-            padding: 50px;
-            background-color: #f4f4f9;
-            margin: 0;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
-        }
-        input, button {
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 5px;
-            width: 80%;
-            max-width: 400px;
+        * {
             box-sizing: border-box;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        
+        body {
+            background: linear-gradient(135deg, #f0f7e9, #e2e8d5);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 3.5rem;
+            color: #556B2F;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #556B2F, #6B8E23);
+            border-radius: 2px;
+        }
+        
+        .description {
+            color: #555;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 20px auto;
+            line-height: 1.8;
+        }
+        
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 20px;
+            border: 1px solid rgba(85, 107, 47, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .calculator-card:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.2rem;
+        }
+        
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            color: #556B2F;
+            font-size: 1.3rem;
+        }
+        
+        input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: #f8faf0;
+            color: #2c3e50;
+        }
+        
+        input:focus {
+            border-color: #556B2F;
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(85, 107, 47, 0.2);
+        }
+        
+        .example {
+            color: #7a904c;
+            font-size: 0.95rem;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        
         button {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #7a904c, #556B2F);
             color: white;
             border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(85, 107, 47, 0.3);
         }
+        
         button:hover {
-            background-color: #45a049;
+            background: linear-gradient(135deg, #556B2F, #3D4D21);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(61, 77, 33, 0.4);
         }
-        #result {
-            font-size: 20px;
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        .result-container {
+            margin-top: 30px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .result-box {
+            background: #f0f7e9;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #556B2F;
+            margin-bottom: 20px;
+        }
+        
+        .result-title {
+            font-size: 1.3rem;
+            color: #556B2F;
+            margin-bottom: 15px;
             font-weight: bold;
-            color: #333;
+        }
+        
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3D4D21;
+            margin: 10px 0;
+        }
+        
+        .calculation-steps {
+            background: #f8faf0;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 25px;
+            border: 1px dashed #7a904c;
+        }
+        
+        .calculation-steps h3 {
+            color: #556B2F;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            background: rgba(85, 107, 47, 0.05);
+            border-radius: 8px;
+        }
+        
+        .step-number {
+            background: #556B2F;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .error-message {
+            color: #c0392b;
+            background: #fadbd8;
+            padding: 15px;
+            border-radius: 10px;
             margin-top: 20px;
-            opacity: 0;
-            animation: fadeIn 1s forwards;
-        }
-        .error {
-            color: red;
+            text-align: center;
+            display: none;
+            border-left: 5px solid #c0392b;
             font-weight: bold;
         }
-        .info {
-            color: #555;
-            font-size: 14px;
+        
+        .info-box {
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border-left: 5px solid #3498db;
         }
+        
+        .info-box h3 {
+            color: #2980b9;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-content {
+            line-height: 1.8;
+        }
+        
+        .info-content ul {
+            padding-right: 20px;
+            margin-top: 15px;
+        }
+        
+        .info-content li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-right: 25px;
+        }
+        
+        .info-content li:before {
+            content: "•";
+            color: #2980b9;
+            font-weight: bold;
+            position: absolute;
+            right: 0;
+            font-size: 1.5rem;
+        }
+        
         footer {
-            margin-top: 50px;
-            font-size: 14px;
-            color: #777;
+            text-align: center;
+            color: #7f8c8d;
+            padding: 25px 0;
+            margin-top: auto;
+            width: 100%;
+            font-size: 1.1rem;
+            border-top: 2px solid rgba(85, 107, 47, 0.2);
         }
+        
         footer a {
-            color: #4CAF50;
+            color: #556B2F;
+            font-weight: bold;
             text-decoration: none;
+            transition: all 0.3s ease;
         }
+        
         footer a:hover {
             text-decoration: underline;
         }
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>أدوات طلاب التمريض</title>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --primary-color: #556B2F; /* لون جنزاري رئيسي */
-      --secondary-color: #6B8E23; /* لون جنزاري ثانوي */
-      --nursing-color: #556B2F; /* لون التمريض - جنزاري */
-      --nursing-dark: #3D4D21; /* جنزاري غامق */
-      --success-color: #5D8C22; /* لون النجاح - جنزاري فاتح */
-      --success-dark: #4A6F1B; 
-      --background: #f0f7e9; /* خلفية جنزارية فاتحة */
-      --card-bg: #ffffff;
-      --text-color: #2c3e50;
-      --light-gray: #ecf0e9;
-      --white: #fff;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      --transition: all 0.3s ease;
-    }
-    
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    
-    body {
-      font-family: 'Tajawal', sans-serif;
-      background: linear-gradient(135deg, #f0f7e9, #e2e8d5); /* خلفية جنزارية */
-      margin: 0;
-      padding: 1rem;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      color: var(--text-color);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-    
-    header {
-      text-align: center;
-      margin: 1rem 0 2rem;
-      position: relative;
-    }
-    
-    .logo {
-      font-size: 2.8rem;
-      color: var(--nursing-color);
-      margin-bottom: 0.5rem;
-      animation: pulse 2s infinite;
-    }
-    
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 1rem;
-      color: var(--nursing-color);
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-      position: relative;
-      display: inline-block;
-    }
-    
-    h1:after {
-      content: "";
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
-      background: linear-gradient(90deg, var(--nursing-color), var(--primary-color));
-      border-radius: 2px;
-    }
-    
-    .tool-menu {
-      list-style: none;
-      padding: 0;
-      margin: 1.5rem auto 2rem;
-      display: flex;
-      justify-content: center;
-      gap: 1.2rem;
-      flex-wrap: wrap;
-      max-width: 900px;
-    }
-    
-    .tool-menu li {
-      cursor: pointer;
-      padding: 0.9rem 1.8rem;
-      background: var(--nursing-color);
-      color: var(--white);
-      border-radius: 10px;
-      transition: var(--transition);
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: var(--shadow);
-      font-size: 1.1rem;
-    }
-    
-    .tool-menu li:hover {
-      background: var(--nursing-dark);
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px rgba(85, 107, 47, 0.3);
-    }
-    
-    .tool-menu li.active {
-      background: var(--nursing-dark);
-      transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(61, 77, 33, 0.4);
-    }
-    
-    .tool-menu li i {
-      font-size: 1.3rem;
-    }
-    
-    .tool-container, .gov-gpa-container, .about-container {
-      background: var(--card-bg);
-      padding: 2.2rem;
-      border-radius: 15px;
-      box-shadow: var(--shadow);
-      max-width: 750px;
-      margin: 0 auto 2.5rem;
-      transition: var(--transition);
-      border: 1px solid rgba(85, 107, 47, 0.15);
-      animation: fadeIn 0.5s ease-out;
-    }
-    
-    .tool-container:hover, .gov-gpa-container:hover, .about-container:hover {
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      transform: translateY(-3px);
-    }
-    
-    h2 {
-      text-align: center;
-      margin-bottom: 1.8rem;
-      color: var(--nursing-color);
-      position: relative;
-      padding-bottom: 0.8rem;
-      font-size: 1.8rem;
-    }
-    
-    h2:after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 70px;
-      height: 3px;
-      background: var(--nursing-color);
-      border-radius: 2px;
-    }
-    
-    .input-group {
-      margin-bottom: 1.8rem;
-    }
-    
-    label {
-      display: block;
-      margin-bottom: 0.6rem;
-      font-weight: bold;
-      color: var(--text-color);
-      font-size: 1.1rem;
-    }
-    
-    input, button {
-      width: 100%;
-      padding: 1rem;
-      margin: 0.6rem 0;
-      border-radius: 10px;
-      box-sizing: border-box;
-      font-family: inherit;
-      font-size: 1.05rem;
-      transition: var(--transition);
-    }
-    
-    input {
-      border: 2px solid #ddd;
-      background: var(--light-gray);
-      color: var(--text-color);
-    }
-    
-    input:focus {
-      border-color: var(--nursing-color);
-      outline: none;
-      background: var(--white);
-      box-shadow: 0 0 0 3px rgba(85, 107, 47, 0.2);
-    }
-    
-    button {
-      background: var(--nursing-color);
-      color: var(--white);
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 1.15rem;
-      box-shadow: 0 4px 8px rgba(85, 107, 47, 0.3);
-      position: relative;
-      overflow: hidden;
-      margin-top: 0.8rem;
-    }
-    
-    button:hover {
-      background: var(--nursing-dark);
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px rgba(61, 77, 33, 0.4);
-    }
-    
-    button:active {
-      transform: translateY(1px);
-    }
-    
-    .password-generator button {
-      background: var(--primary-color);
-      box-shadow: 0 4px 8px rgba(85, 107, 47, 0.3);
-    }
-    
-    .password-generator button:hover {
-      background: var(--secondary-color);
-      box-shadow: 0 6px 12px rgba(107, 142, 35, 0.4);
-    }
-    
-    .gov-gpa-container button {
-      background: linear-gradient(135deg, #7a904c, #556B2F);
-      box-shadow: 0 4px 8px rgba(122, 144, 76, 0.3);
-    }
-    
-    .gov-gpa-container button:hover {
-      background: linear-gradient(135deg, #556B2F, #3D4D21);
-      box-shadow: 0 6px 12px rgba(85, 107, 47, 0.4);
-    }
-    
-    .result-box {
-      padding: 1.4rem;
-      margin: 1.8rem 0;
-      border-radius: 10px;
-      display: none;
-      cursor: pointer;
-      text-align: center;
-      font-weight: bold;
-      font-size: 1.15rem;
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-      animation: fadeIn 0.5s ease;
-    }
-    
-    .result-box:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.1;
-      z-index: 0;
-    }
-    
-    .success { 
-      background: #f0f7e9; 
-      color: var(--nursing-color);
-      border-left: 5px solid var(--nursing-color);
-    }
-    
-    .success:before {
-      background: var(--nursing-color);
-    }
-    
-    .error { 
-      background: #f5efd9; 
-      color: #8B4513;
-      border-left: 5px solid #8B4513;
-    }
-    
-    .error:before {
-      background: #8B4513;
-    }
-    
-    .info { 
-      background: #f0f8e9; 
-      color: #556B2F;
-      padding: 1.2rem;
-      border-radius: 10px;
-      margin: 1.8rem 0;
-      border-left: 5px solid var(--nursing-color);
-      font-size: 1.05rem;
-    }
-    
-    .password {
-      font-weight: bold;
-      font-size: 1.3rem;
-      letter-spacing: 2px;
-      background: rgba(0, 0, 0, 0.05);
-      padding: 0.8rem 1.2rem;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 0.8rem;
-      color: var(--nursing-color);
-      border: 1px dashed var(--nursing-color);
-    }
-    
-    .explanation {
-      margin-top: 2rem;
-      padding: 1.5rem;
-      background: var(--light-gray);
-      border-radius: 10px;
-      font-size: 1.05rem;
-      border: 1px solid rgba(85, 107, 47, 0.1);
-    }
-    
-    .explanation h3 {
-      margin-bottom: 0.8rem;
-      color: var(--nursing-color);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 1.3rem;
-    }
-    
-    .gov-gpa-container {
-      text-align: center;
-      padding: 2.8rem;
-    }
-    
-    .gov-icon {
-      font-size: 4.5rem;
-      color: var(--nursing-color);
-      margin-bottom: 1.8rem;
-      animation: bounce 2s infinite;
-    }
-    
-    /* قسم نبذة عن المطور */
-    .about-container {
-      background: linear-gradient(135deg, #ffffff, #f8faf0);
-      border-radius: 15px;
-      padding: 2.5rem;
-      max-width: 850px;
-      border-top: 5px solid var(--nursing-color);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .about-container:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 5px;
-      background: linear-gradient(90deg, var(--nursing-color), var(--primary-color));
-    }
-    
-    .developer-info {
-      display: flex;
-      align-items: center;
-      gap: 2.5rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    
-    .developer-img {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      border: 5px solid var(--nursing-color);
-      box-shadow: var(--shadow);
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-    
-    .developer-details {
-      flex: 1;
-      text-align: right;
-      min-width: 300px;
-    }
-    
-    .developer-details h3 {
-      font-size: 2rem;
-      color: var(--nursing-color);
-      margin-bottom: 0.8rem;
-      position: relative;
-      display: inline-block;
-    }
-    
-    .developer-details h3:after {
-      content: "";
-      position: absolute;
-      bottom: -8px;
-      right: 0;
-      width: 100px;
-      height: 3px;
-      background: var(--nursing-color);
-      border-radius: 2px;
-    }
-    
-    .developer-details p {
-      font-size: 1.15rem;
-      line-height: 1.8;
-      margin-bottom: 1.2rem;
-      color: #555;
-    }
-    
-    .channel-info {
-      background: #f0f7e9;
-      padding: 1.8rem;
-      border-radius: 10px;
-      border-left: 5px solid var(--nursing-color);
-      margin-top: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .channel-info:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 5px;
-      height: 100%;
-      background: var(--nursing-color);
-    }
-    
-    .channel-info h4 {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--nursing-color);
-      margin-bottom: 1.2rem;
-      font-size: 1.4rem;
-    }
-    
-    .channel-info ul {
-      padding-right: 1.8rem;
-      margin-top: 0.8rem;
-    }
-    
-    .channel-info li {
-      margin-bottom: 0.8rem;
-      position: relative;
-      padding-right: 1.5rem;
-    }
-    
-    .channel-info li:before {
-      content: "•";
-      color: var(--nursing-color);
-      font-weight: bold;
-      position: absolute;
-      right: 0;
-    }
-    
-    .channel-links {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-top: 2rem;
-      flex-wrap: wrap;
-    }
-    
-    .channel-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 1rem 2rem;
-      background: var(--nursing-color);
-      color: white;
-      border-radius: 10px;
-      text-decoration: none;
-      transition: var(--transition);
-      font-weight: bold;
-      font-size: 1.1rem;
-      box-shadow: var(--shadow);
-    }
-    
-    .channel-link:hover {
-      background: var(--nursing-dark);
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px rgba(61, 77, 33, 0.3);
-    }
-    
-    footer {
-      text-align: center;
-      color: #7f8c8d;
-      padding: 1.8rem;
-      margin-top: auto;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 10px;
-      margin: 1.5rem;
-      font-size: 1.1rem;
-      border-top: 2px solid var(--nursing-color);
-    }
-    
-    footer a {
-      color: var(--nursing-color);
-      font-weight: bold;
-      text-decoration: none;
-      transition: var(--transition);
-      position: relative;
-    }
-    
-    footer a:after {
-      content: "";
-      position: absolute;
-      bottom: -2px;
-      right: 0;
-      width: 0;
-      height: 2px;
-      background: var(--nursing-color);
-      transition: var(--transition);
-    }
-    
-    footer a:hover {
-      color: var(--nursing-dark);
-    }
-    
-    footer a:hover:after {
-      width: 100%;
-    }
-    
-    @media (max-width: 768px) {
-      .tool-menu {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      
-      .tool-menu li {
-        width: 100%;
-        justify-content: center;
-        padding: 1rem;
-      }
-      
-      .tool-container, .gov-gpa-container, .about-container {
-        padding: 1.8rem;
-      }
-      
-      h1 {
-        font-size: 1.8rem;
-      }
-      
-      h2 {
-        font-size: 1.6rem;
-      }
-      
-      .gov-icon {
-        font-size: 3.5rem;
-      }
-      
-      .developer-info {
-        flex-direction: column;
-        text-align: center;
-      }
-      
-      .developer-details {
-        text-align: center;
-      }
-      
-      .developer-img {
-        width: 140px;
-        height: 140px;
-      }
-      
-      .developer-details h3:after {
-        left: 50%;
-        transform: translateX(-50%);
-        right: auto;
-      }
-      
-      .channel-links {
-        gap: 1.2rem;
-      }
-      
-      .channel-link {
-        padding: 0.9rem 1.5rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      body {
-        padding: 0.8rem;
-      }
-      
-      .tool-menu li {
-        padding: 0.9rem;
-        font-size: 1rem;
-      }
-      
-      .tool-container, .gov-gpa-container, .about-container {
-        padding: 1.5rem;
-      }
-      
-      .developer-img {
-        width: 120px;
-        height: 120px;
-      }
-      
-      .channel-link {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-    
-    .hidden {
-      display: none;
-    }
-    
-    /* Animations */
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-      40% {transform: translateY(-20px);}
-      60% {transform: translateY(-10px);}
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .copy-notification {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(85, 107, 47, 0.9);
-      color: white;
-      padding: 12px 25px;
-      border-radius: 8px;
-      z-index: 1000;
-      display: none;
-      animation: fadeInOut 2s;
-      font-weight: bold;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-    
-    @keyframes fadeInOut {
-      0% { opacity: 0; bottom: 0; }
-      20% { opacity: 1; bottom: 30px; }
-      80% { opacity: 1; bottom: 30px; }
-      100% { opacity: 0; bottom: 0; }
-    }
-    
-    .section-title {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 1.5rem;
-    }
-    
-    .section-title i {
-      font-size: 2.2rem;
-      color: var(--nursing-color);
-      background: rgba(85, 107, 47, 0.1);
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="logo">
-      <i class="fas fa-user-nurse"></i>
-    </div>
-    <h1>أدوات طلاب التمريض</h1>
-    
-    <!-- قائمة التنقل للأدوات -->
-    <ul class="tool-menu">
-      <li data-target="aboutSection" class="active">
-        <i class="fas fa-user"></i>
-        نبذة عن المطور
-      </li>
-      <li data-target="gpaSection">
-        <i class="fas fa-calculator"></i>
-        حاسبة التقدير الجامعي للاهلية
-      </li>
-      <li data-target="passwordSection">
-        <i class="fas fa-key"></i>
-        توليد كلمة سر
-      </li>
-      <li data-target="govGpaSection">
-        <i class="fas fa-university"></i>
-        حساب التقدير الجامعي للحكومي
-      </li>
-    </ul>
-  </header>
-  
-  <main>
-    <!-- قسم نبذة تعريفية عن المطور -->
-    <section id="aboutSection" class="about-container">
-      <div class="section-title">
-        <i class="fas fa-user"></i>
-        <h2>نبذة عن المطور</h2>
-      </div>
-      
-      <div class="developer-info">
-        <img src="https://f.top4top.io/p_3465y9dw81.png" alt="قناة تمريضولوجي" class="developer-img">
-        <div class="developer-details">
-          <h3>أحمد رجب</h3>
-          <p>طالب تمريض ومطور هذه الأدوات، ومساهم قناة تمريضولوجي على تيلجرام</p>
-          <p>طالب تمريض متحمس لتطوير أدوات تعليمية وتكنولوجية تفيد زملائي الطلاب في مسيرتهم الأكاديمية. أسعى دائماً لتبسيط العمليات الأكاديمية المعقدة من خلال حلول برمجية ذكية.</p>
-          <p>أؤمن بأن التكنولوجيا يجب أن تكون في خدمة التعليم وتسهيل حياة الطلاب، وليس العكس.</p>
-        </div>
-      </div>
-      
-      <div class="channel-info">
-        <h4><i class="fas fa-heartbeat"></i> عن قناة تمريضولوجي</h4>
-        <p>قناة تمريضولوجي هي منصة تعليمية متخصصة في مجال التمريض والعلوم الصحية، تهدف إلى:</p>
-        <ul>
-          <li>تقديم ملخصات دراسية شاملة ومبسطة لطلاب التمريض</li>
-          <li>توفير نصائح أكاديمية وإرشادات للنجاح في المجال الطبي</li>
-          <li>مشاركة أحدث المستجدات في مجال الرعاية الصحية والتمريض</li>
-          <li>دعم طلاب التمريض في مسيرتهم التعليمية والمهنية</li>
-        </ul>
-      </div>
-      
-      <div class="channel-links">
-        <a href="https://www.facebook.com/alproda" target="_blank" class="channel-link">
-          <i class="fab fa-facebook"></i> صفحتي على الفيسبوك
-        </a>
-        <a href="https://t.me/Nursingology2025" target="_blank" class="channel-link">
-          <i class="fab fa-telegram"></i> قناة تمريضولوجي على تيليجرام
-        </a>
-      </div>
-    </section>
-
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-    <!-- قسم حاسبة التقدير الجامعي للاهلية -->
-    <section id="gpaSection" class="tool-container gpa-calculator hidden">
-      <div class="section-title">
-        <i class="fas fa-calculator"></i>
-        <h2>حاسبة التقدير الجامعي للاهلية</h2>
-      </div>
-      
-      <div class="input-group">
-        <label for="gpa">المعدل التراكمي (GPA)</label>
-        <input type="number" id="gpa" step="0.01" min="0" max="4" placeholder="أدخل المعدل التراكمي (مثال: 3.5)" aria-label="معدل التراكمي">
-      </div>
-      
-      <button id="calculateBtn">
-        <i class="fas fa-calculator"></i> احسب التقدير
-      </button>
-      
-      <div id="gpa-result" class="result-box"></div>
-      
-      <div class="explanation">
-        <h3><i class="fas fa-info-circle"></i> كيف يعمل هذا الحساب؟</h3>
-        <p>يقوم هذا الحساب بتحويل المعدل التراكمي (GPA) من نظام 4 نقاط إلى التقدير اللفظي المتبع في كليات التمريض والجامعات العربية. كل تقدير يتوافق مع نطاق معين من المعدلات التراكمية.</p>
-      </div>
-    </section>
-
-        /* استعلامات الوسائط لتحسين التجاوب */
+        
         @media (max-width: 768px) {
-            body {
-                padding: 30px;
+            .container {
+                padding: 15px;
             }
-            input, button {
-                width: 90%;
-                max-width: 100%;
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .description {
+                font-size: 1.1rem;
+            }
+            
+            .calculator-card {
+                padding: 20px;
+            }
+            
+            .result-value {
+                font-size: 2rem;
             }
         }
-    <!-- قسم توليد كلمة سر الطالب -->
-    <section id="passwordSection" class="tool-container password-generator hidden">
-      <div class="section-title">
-        <i class="fas fa-key"></i>
-        <h2>توليد كلمة سر الطالب</h2>
-      </div>
-      
-      <div class="input-group">
-        <label for="nationalId">الرقم القومي</label>
-        <input type="text" id="nationalId" placeholder="الرقم القومي (14 رقم)" maxlength="14" inputmode="numeric" aria-label="الرقم القومي">
-      </div>
-      
-      <button id="generateBtn">
-        <i class="fas fa-cogs"></i> توليد الكود
-      </button>
-      
-      <div id="password-result" class="result-box"></div>
-      
-      <div class="info">
-        <h3><i class="fas fa-exclamation-circle"></i> شروط التوليد:</h3>
-        <ul>
-          <li>آخر 5 أرقام من الرقم القومي</li>
-          <li>يجب أن يبدأ الرقم القومي بـ 2 أو 3</li>
-          <li>إضافة اللاحقة الثابتة @sis</li>
-        </ul>
-      </div>
-    </section>
-
+        
         @media (max-width: 480px) {
             h1 {
-                font-size: 24px;
+                font-size: 1.7rem;
             }
-            .info {
-                font-size: 12px;
+            
+            .logo {
+                font-size: 2.8rem;
+            }
+            
+            .input-icon {
+                font-size: 1.1rem;
+                right: 12px;
+            }
+            
+            input {
+                padding: 12px 15px 12px 40px;
+                font-size: 1rem;
+            }
+            
+            button {
+                font-size: 1.1rem;
+                padding: 12px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <h1>حاسبة النسبة المئوية</h1>
-    <p>ادخل درجاتك واحدة تلو الأخرى (افصل بين كل درجة وفاصلة `,`):</p>
-    <input type="text" id="gradesInput" placeholder="مثال: 80, 90, 85" />
-    <button onclick="calculatePercentage()">احسب النسبة المئوية</button>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-calculator"></i>
+            </div>
+            <h1>حاسبة النسبة المئوية</h1>
+            <p class="description">
+                أداة بسيطة لحساب النسبة المئوية لمجموعة من الدرجات. أدخل درجاتك مفصولة بفواصل واحصل على النسبة المئوية الإجمالية فوراً!
+            </p>
+        </div>
+        
+        <div class="calculator-card">
+            <div class="input-group">
+                <label for="gradesInput">
+                    <i class="fas fa-graduation-cap"></i> أدخل درجاتك (مفصولة بفواصل)
+                </label>
+                <div class="input-container">
+                    <i class="fas fa-pen input-icon"></i>
+                    <input type="text" id="gradesInput" placeholder="مثال: 80, 90, 85" />
+                </div>
+                <p class="example">تأكد من أن جميع القيم أرقام صحيحة ويفضل أن تكون مفصولة بفاصلة (`,`).</p>
+            </div>
+            
+            <button onclick="calculatePercentage()">
+                <i class="fas fa-calculator"></i> احسب النسبة المئوية
+            </button>
+            
+            <div class="error-message" id="error-message"></div>
+            
+            <div class="result-container" id="result-container">
+                <div class="result-box">
+                    <div class="result-title">
+                        <i class="fas fa-chart-line"></i> النتيجة النهائية
+                    </div>
+                    <div class="result-value" id="result-value"></div>
+                    <p id="result-text"></p>
+                </div>
+                
+                <div class="calculation-steps">
+                    <h3>
+                        <i class="fas fa-list-ol"></i> خطوات الحساب
+                    </h3>
+                    <div class="steps" id="steps-container"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h3>
+                <i class="fas fa-info-circle"></i> معلومات عن الحاسبة
+            </h3>
+            <div class="info-content">
+                <p>تقوم هذه الحاسبة بحساب النسبة المئوية لمجموعة من الدرجات باستخدام الصيغة التالية:</p>
+                <p style="text-align: center; margin: 15px 0; font-weight: bold; font-size: 1.2rem;">
+                    النسبة المئوية = (900 - مجموع الدرجات) ÷ 9
+                </p>
+                <ul>
+                    <li>أدخل الدرجات مفصولة بفواصل (مثال: 80, 90, 85)</li>
+                    <li>يمكنك إدخال أي عدد من الدرجات</li>
+                    <li>يجب أن تكون جميع القيم أرقام صحيحة أو عشرية</li>
+                    <li>النتيجة ستظهر مع خطوات الحساب التفصيلية</li>
+                </ul>
+            </div>
+        </div>
+    </div>
     
-    <div id="result"></div>
-    <div id="error-message" class="error"></div>
-    <div class="info">تأكد من أن جميع القيم أرقام صحيحة ويفضل أن تكون مفصولة بفاصلة (`,`).</div>
-    <!-- قسم حساب التقدير الجامعي للحكومي -->
-    <section id="govGpaSection" class="gov-gpa-container hidden">
-      <div class="gov-icon">
-        <i class="fas fa-university"></i>
-      </div>
-      
-      <h2>حساب التقدير الجامعي للحكومي</h2>
-      <p style="margin-bottom: 1.8rem; font-size: 1.1rem;">انقر على الزر بالأسفل للانتقال إلى أداة حساب التقدير الجامعي للحكومي المخصصة لطلاب التمريض</p>
-      
-      <button onclick="window.location.href='https://habat-tech.github.io/ToolsBNS/govpc'">
-        <i class="fas fa-external-link-alt"></i> الانتقال إلى الحاسبة الحكومية
-      </button>
-      
-      <div class="explanation" style="margin-top: 2.2rem;">
-        <h3><i class="fas fa-info-circle"></i> عن هذه الأداة</h3>
-        <p>توفر هذه الأداة المتخصصة حساب التقدير الجامعي للطلاب في كليات التمريض الحكومية. تقوم بحساب المعدل التراكمي بناءً على نظام النقاط المعتمد في الجامعات الحكومية.</p>
-      </div>
-    </section>
-  </main>
-  
-  <div class="copy-notification" id="copyNotification">تم نسخ كلمة السر إلى الحافظة!</div>
-  
-  <footer>
-    تم التطوير بواسطة 
-    <a href="https://www.facebook.com/alproda" target="_blank">
-      أحمد رجب
-    </a>
-    © 2025 - جميع الحقوق محفوظة
-  </footer>
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const sections = document.querySelectorAll('main > section');
-      const menuItems = document.querySelectorAll('.tool-menu li');
-      const copyNotification = document.getElementById('copyNotification');
-      
-      // حل مشكلة التمرير الأفقي
-      document.body.style.overflowX = 'hidden';
-      
-      // إظهار قسم نبذة عن المطور عند التحميل
-      showSection('aboutSection');
-      
-      // إضافة مستمعات الأحداث لعناصر القائمة
-      menuItems.forEach(item => {
-        item.addEventListener('click', () => {
-          const targetId = item.getAttribute('data-target');
-          showSection(targetId);
-          
-          // إضافة تأثير للعنصر النشط
-          menuItems.forEach(i => i.classList.remove('active'));
-          item.classList.add('active');
-        });
-      });
-
+    <footer>
+        تم التصميم والتطوير بواسطة <a href="#" target="_blank">أحمد رجب</a> &copy; 2025
+    </footer>
+    
     <script>
         function calculatePercentage() {
-            var gradesInput = document.getElementById('gradesInput').value;
-            var errorMessage = document.getElementById('error-message');
-            var resultDiv = document.getElementById('result');
-            errorMessage.innerText = ''; // مسح أي رسائل خطأ سابقة
-            resultDiv.innerText = ''; // مسح أي نتيجة سابقة
-      // دوال حاسبة التقدير الجامعي
-      const gpaInput = document.getElementById('gpa');
-      const gpaResult = document.getElementById('gpa-result');
-      const calculateBtn = document.getElementById('calculateBtn');
-
-            if (gradesInput === '') {
-                errorMessage.innerText = 'من فضلك أدخل درجاتك';
+            // الحصول على قيم المدخلات
+            const gradesInput = document.getElementById('gradesInput').value;
+            const errorMessage = document.getElementById('error-message');
+            const resultContainer = document.getElementById('result-container');
+            const resultValue = document.getElementById('result-value');
+            const resultText = document.getElementById('result-text');
+            const stepsContainer = document.getElementById('steps-container');
+            
+            // إخفاء الرسائل السابقة
+            errorMessage.style.display = 'none';
+            resultContainer.style.display = 'none';
+            stepsContainer.innerHTML = '';
+            
+            // التحقق من أن الحقل غير فارغ
+            if (!gradesInput.trim()) {
+                errorMessage.textContent = 'من فضلك أدخل درجاتك أولاً';
+                errorMessage.style.display = 'block';
                 return;
             }
-      const grades = [
-        {min: 3.8, grade: "ممتاز مرتفع (A+)", percentage: "95% - 100%"},
-        {min: 3.6, grade: "ممتاز (A)", percentage: "90% - 95%"},
-        {min: 3.4, grade: "ممتاز منخفض (A-)", percentage: "85% - 90%"},
-        {min: 3.2, grade: "جيد جدًا مرتفع (B+)", percentage: "80% - 85%"},
-        {min: 3.0, grade: "جيد جدًا (B)", percentage: "75% - 80%"},
-        {min: 2.8, grade: "جيد جدًا منخفض (B-)", percentage: "70% - 75%"},
-        {min: 2.6, grade: "جيد مرتفع (C+)", percentage: "65% - 70%"},
-        {min: 2.4, grade: "جيد (C)", percentage: "60% - 65%"},
-        {min: 2.0, grade: "جيد منخفض (C-)", percentage: "55% - 60%"},
-        {min: 1.8, grade: "مقبول مرتفع (D+)", percentage: "50% - 55%"},
-        {min: 1.6, grade: "مقبول (D)", percentage: "45% - 50%"},
-        {min: 0, grade: "راسب (F)", percentage: "أقل من 45%"}
-      ];
-
-            // تحويل النص المدخل إلى مصفوفة أرقام
-            var gradesArray = gradesInput.split(',').map(function(item) {
-                return parseInt(item.trim(), 10);
+            
+            // تقسيم المدخلات إلى مصفوفة من الأرقام
+            const gradesArray = gradesInput.split(',').map(item => {
+                // إزالة المسافات والحروف غير المرغوب فيها
+                const cleanedItem = item.trim().replace(/[^0-9.]/g, '');
+                return cleanedItem ? parseFloat(cleanedItem) : NaN;
             });
-      calculateBtn.addEventListener('click', () => {
-        const gpa = parseFloat(gpaInput.value);
-        if (isNaN(gpa)) {
-          showResult(gpaResult, 'error', 'الرجاء إدخال معدل تراكمي صحيح');
-          return;
-        }
-        
-        if (gpa < 0 || gpa > 4) {
-          showResult(gpaResult, 'error', 'المعدل التراكمي يجب أن يكون بين 0 و 4');
-          return;
-        }
-        
-        for (const item of grades) {
-          if (gpa >= item.min) {
-            showResult(gpaResult, 'success', `
-              <div><i class="fas fa-medal"></i> التقدير: ${item.grade}</div>
-              <div><i class="fas fa-percentage"></i> النسبة المئوية: ${item.percentage}</div>
-              <div><i class="fas fa-star"></i> المعدل التراكمي: ${gpa.toFixed(2)}</div>
-            `);
-            return;
-          }
-        }
-      });
-
-            // التأكد من أن جميع القيم المدخلة أرقام صحيحة
+            
+            // التحقق من وجود أرقام غير صالحة
             if (gradesArray.some(isNaN)) {
-                errorMessage.innerText = 'من فضلك أدخل أرقام صحيحة فقط مفصولة بفاصلة (`,`)';
+                errorMessage.textContent = 'تحتوي المدخلات على قيم غير صالحة. يرجى إدخال أرقام فقط مفصولة بفواصل.';
+                errorMessage.style.display = 'block';
                 return;
             }
-      // دوال مولد كلمة السر
-      const nationalIdInput = document.getElementById('nationalId');
-      const passwordResult = document.getElementById('password-result');
-      const generateBtn = document.getElementById('generateBtn');
-
-            // جمع الدرجات
-            var totalGrades = gradesArray.reduce(function(sum, current) {
-                return sum + current;
-            }, 0);
-      generateBtn.addEventListener('click', () => {
-        const nationalId = nationalIdInput.value.trim();
-        if (!/^\d{14}$/.test(nationalId)) {
-          showResult(passwordResult, 'error', 'الرجاء إدخال رقم قومي صحيح (14 رقمًا)!');
-          return;
+            
+            // حساب المجموع
+            const total = gradesArray.reduce((sum, grade) => sum + grade, 0);
+            
+            // حساب النسبة المئوية
+            const percentage = (900 - total) / 9;
+            
+            // عرض النتيجة
+            resultValue.textContent = percentage.toFixed(2) + '%';
+            resultText.textContent = `بناءً على ${gradesArray.length} درجات`;
+            resultContainer.style.display = 'block';
+            
+            // إظهار خطوات الحساب
+            showCalculationSteps(gradesArray, total, percentage);
         }
-        if (!['2', '3'].includes(nationalId.charAt(0))) {
-          showResult(passwordResult, 'error', 'يجب أن يبدأ الرقم القومي بـ2 أو 3!');
-          return;
-        }
-        const password = `${nationalId.slice(-5)}@sis`;
-        showResult(passwordResult, 'success', `
-          <div>كلمة السر المولدة:</div>
-          <div class="password">${password}</div>
-          <div style="margin-top: 15px; font-size: 1rem;"><i class="fas fa-mouse-pointer"></i> انقر على النص لنسخه</div>
-        `);
-      });
-
-            // حساب النتيجة
-            var result = 900 - totalGrades;
-            var percentage = result / 9;
-            var percentageText = 'النسبة المئوية هي: ' + percentage.toFixed(2) + '%';
-      // دالة عرض النتائج
-      function showResult(element, type, message) {
-        element.className = `result-box ${type}`;
-        element.innerHTML = message;
-        element.style.display = 'block';
-      }
-
-            resultDiv.innerText = percentageText;
-      // نسخ كلمة السر إلى الحافظة عند النقر
-      passwordResult.addEventListener('click', (e) => {
-        const passwordSpan = passwordResult.querySelector('.password');
-        if (passwordSpan) {
-          navigator.clipboard.writeText(passwordSpan.textContent).then(() => {
-            copyNotification.style.display = 'block';
-            setTimeout(() => {
-              copyNotification.style.display = 'none';
-            }, 2000);
-          }).catch(err => {
-            console.error('خطأ في النسخ: ', err);
-            alert('حدث خطأ أثناء النسخ!');
-          });
+        
+        function showCalculationSteps(grades, total, percentage) {
+            const stepsContainer = document.getElementById('steps-container');
+            
+            // الخطوة 1: عرض الدرجات المدخلة
+            const step1 = document.createElement('div');
+            step1.className = 'step';
+            step1.innerHTML = `
+                <div class="step-number">1</div>
+                <div>الدرجات المدخلة: <strong>${grades.join(', ')}</strong></div>
+            `;
+            stepsContainer.appendChild(step1);
+            
+            // الخطوة 2: حساب مجموع الدرجات
+            const step2 = document.createElement('div');
+            step2.className = 'step';
+            step2.innerHTML = `
+                <div class="step-number">2</div>
+                <div>مجموع الدرجات: <strong>${total.toFixed(2)}</strong></div>
+            `;
+            stepsContainer.appendChild(step2);
+            
+            // الخطوة 3: تطبيق الصيغة
+            const step3 = document.createElement('div');
+            step3.className = 'step';
+            step3.innerHTML = `
+                <div class="step-number">3</div>
+                <div>تطبيق الصيغة: (900 - ${total.toFixed(2)}) ÷ 9 = ${(900 - total).toFixed(2)} ÷ 9</div>
+            `;
+            stepsContainer.appendChild(step3);
+            
+            // الخطوة 4: النتيجة النهائية
+            const step4 = document.createElement('div');
+            step4.className = 'step';
+            step4.innerHTML = `
+                <div class="step-number">4</div>
+                <div>النسبة المئوية: <strong>${percentage.toFixed(2)}%</strong></div>
+            `;
+            stepsContainer.appendChild(step4);
+            
+            // الخطوة 5: تقييم النتيجة
+            let evaluation = '';
+            if (percentage >= 90) evaluation = 'ممتاز! أداء رائع';
+            else if (percentage >= 80) evaluation = 'جيد جداً! أداء ممتاز';
+            else if (percentage >= 70) evaluation = 'جيد! أداء مقبول';
+            else if (percentage >= 60) evaluation = 'مقبول، يمكنك التحسين';
+            else evaluation = 'يحتاج إلى تحسين';
+            
+            const step5 = document.createElement('div');
+            step5.className = 'step';
+            step5.innerHTML = `
+                <div class="step-number">5</div>
+                <div>تقييم النتيجة: <strong>${evaluation}</strong></div>
+            `;
+            stepsContainer.appendChild(step5);
         }
     </script>
-      });
-
-    <footer>
-        <p>تم التصميم بواسطة <a href="https://www.facebook.com/alproda" target="_blank">أحمد رجب يوسف</a></p>
-    </footer>
-      // التأكد من أن الإدخال للرقم القومي يحتوي على أرقام فقط
-      nationalIdInput.addEventListener('input', function() {
-        this.value = this.value.replace(/\D/g, '');
-      });
-      
-      // دالة لإظهار القسم المطلوب وإخفاء الباقي
-      function showSection(targetId) {
-        sections.forEach(section => {
-          if (section.id === targetId) {
-            section.classList.remove('hidden');
-            section.style.animation = 'fadeIn 0.5s ease-out';
-          } else {
-            section.classList.add('hidden');
-          }
-        });
-      }
-    });
-  </script>
 </body>
 </html>
